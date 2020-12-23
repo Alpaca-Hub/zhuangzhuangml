@@ -31,8 +31,8 @@ class RepoInitHandler(IPythonHandler):
             msg = f'repo initialized at {git_dir}'
         
         self.write({
-            status: success,
-            msg: msg
+            'status': success,
+            'msg': msg
         })
         
         
