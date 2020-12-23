@@ -6,6 +6,7 @@ from subprocess import check_output
 import subprocess
 
 repo = None
+htable = []
 
 def delete_cell():
     if cell in htable:
