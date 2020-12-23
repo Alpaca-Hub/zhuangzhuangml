@@ -1,4 +1,4 @@
-# zhuangzhuangml
+# zhuangzhuangml 🦙
 zhuangzhuangml is a jupyter notebook plugin for machine learning code versioning
 
 ## Installation
