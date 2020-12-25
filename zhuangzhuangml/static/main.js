@@ -13,6 +13,15 @@ define(['base/js/namespace',
         }
     }
 
+    function get_code_output(i) {
+        // i is the cell index
+        let json = IPython.notebook.toJSON();
+        return {
+            "cell": json.cells[i],
+            "code": json.cells[i].source,
+            "output": json.cells[i].outputs.map((item)=>item.text).join("")
+        };
+    }
 
     function init_set_bind() {
         let overlays = $(".out_prompt_overlay");
@@ -21,20 +30,14 @@ define(['base/js/namespace',
             overlay = $(overlay);
             console.log(overlays);
             overlay.attr("index", i);
-            overlay.click(function (){
-                let json = IPython.notebook.toJSON();
-                console.log(`Getting content of cell ${i}`);
-                console.log(json.cells[i]);
-                console.log(json.cells[i].source);
-                console.log(json.cells[i].outputs.map((item)=>item.text).join(""));
-            });
+            overlay.click(() => {console.log(get_code_output(i));});
         }
     }
 
     function _on_load(){
 
         // log to console
-        console.info('Loaded Jupyter extension: zhuangzhuangml')
+        console.info('Loaded Jupyter extension: zhuangzhuangml');
 
         init_set_bind();
 
