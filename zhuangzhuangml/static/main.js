@@ -3,16 +3,6 @@ define(['base/js/namespace',
         'jquery'],
         function(IPython, dialog, $){
 
-    var git_commit_push  = {
-        help: 'Commit current notebook and push to GitHub',
-        icon : 'fa-github',
-        help_index : '',
-        handler : function (env) {
-            console.log(env);
-
-        }
-    }
-
     function get_code_output(i) {
         // i is the cell index
         let json = IPython.notebook.toJSON();
@@ -24,13 +14,24 @@ define(['base/js/namespace',
     }
 
     function init_set_bind() {
-        let overlays = $(".out_prompt_overlay");
-        for (let i = 0; i < overlays.length; i++) {
-            let overlay = overlays[i];
-            overlay = $(overlay);
-            console.log(overlays);
-            overlay.attr("index", i);
-            overlay.click(() => {console.log(get_code_output(i));});
+        //select the code cell for addition of the function
+        let cells = $(".cell");
+        for(let i = 0; i < cells.length; i++){
+            let cell = cells[i];
+            cell = $(cell);
+            cell.prepend("<div><button class = \"git-btn\"></button></div>");
+        }
+        let buttons = $(".git-btn");
+        for(let i = 0; i < buttons.length;i++){
+            let btn = buttons[i];
+            btn = $(btn);
+            $(btn).html('<i class = "fa-git fa"></i>');
+        }
+        for(let i=0; i < buttons.length; i++){
+            let btn = buttons[i];
+            btn = $(btn);
+            btn.attr("index", i);
+            btn.click(() => {console.log(get_code_output(i));});
         }
     }
 
