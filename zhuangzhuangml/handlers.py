@@ -4,6 +4,7 @@ import os, json, git, urllib, requests
 from git import Repo, GitCommandError
 from subprocess import check_output
 import subprocess
+import json 
 
 class GitCommitHandler(IPythonHandler):
 
@@ -17,13 +18,15 @@ class GitCommitHandler(IPythonHandler):
 
     def put(self):
 
+        with open('../conf.json', 'r') as json_file:
+            config = json.load(json_file)
         # git parameters from environment variables
         # expand variables since Docker's will pass VAR=$VAL as $VAL without expansion
-        git_dir = "{}/{}".format(os.path.expandvars(os.environ.get('GIT_PARENT_DIR')), os.path.expandvars(os.environ.get('GIT_REPO_NAME')))
+        git_dir = "{}/{}".format(os.path.expandvars(config['GIT_PARENT_DIR']), os.path.expandvars(os.environ.get('GIT_REPO_NAME')))
         git_url = os.path.expandvars(os.environ.get('GIT_REMOTE_URL'))
-        git_user = os.path.expandvars(os.environ.get('GIT_USER'))
+        git_user = os.path.expandvars(config['GIT_USER'])
         git_repo_upstream = os.path.expandvars(os.environ.get('GIT_REMOTE_UPSTREAM'))
-        git_branch = git_remote = os.path.expandvars(os.environ.get('GIT_BRANCH_NAME'))
+        git_branch = git_remote = os.path.expandvars(config['GIT_BRANCH_NAME'])
         git_access_token = os.path.expandvars(os.environ.get('GITHUB_ACCESS_TOKEN'))
 
         # get the parent directory for git operations
@@ -58,10 +61,10 @@ class GitCommitHandler(IPythonHandler):
         # client will sent pathname containing git directory; append to git directory's parent
         try:
             if commit_only_source :
-                subprocess.run(['jupyter', 'nbconvert', '--to', 'script', str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename)])
-                filename = str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename.replace('ipynb', 'py'))
+                subprocess.run(['jupyter', 'nbconvert', '--to', 'script', str(config['GIT_PARENT_DIR'] + "/" + os.environ.get('GIT_REPO_NAME') + filename)])
+                filename = str(config['GIT_PARENT_DIR'] + "/" + os.environ.get('GIT_REPO_NAME') + filename.replace('ipynb', 'py'))
             else:
-                filename = str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename)
+                filename = str(config['GIT_PARENT_DIR'] + "/" + os.environ.get('GIT_REPO_NAME') + filename)
                 
             print(repo.git.add(filename))
             print(repo.git.commit( a=False, m="{}\n\nUpdated {}".format(msg, filename) ))
