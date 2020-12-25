@@ -11,9 +11,9 @@ class RepoInitHandler(IPythonHandler):
         # prep data
         data = json.loads(self.request.body.decode('utf-8'))
         git_repo_name = jupyter_uuid = data['jupyter_uuid']
-        git_dir = "{}/{}".format(os.path.expandvars(os.environ.get('GIT_PARENT_DIR')), os.path.expandvars(git_repo_name))
-        git_user = os.path.expandvars(os.environ.get('GIT_USER'))
-        git_branch = git_remote = os.path.expandvars(os.environ.get('GIT_BRANCH_NAME'))
+        git_dir = "{}/{}".format(os.path.expandvars(config['GIT_PARENT_DIR']), os.path.expandvars(git_repo_name))
+        git_user = os.path.expandvars(config['GIT_USER'])
+        git_branch = git_remote = os.path.expandvars(config['GIT_BRANCH_NAME'])
         git_dir_parent = os.path.dirname(git_dir)
 
         # get current directory (to return later)

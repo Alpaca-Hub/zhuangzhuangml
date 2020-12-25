@@ -15,7 +15,7 @@ def delete_cell():
     return False
 
 def register_cell(cell, content):
-    filename = str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + str(cell) + filename.replace('ipynb', 'txt'))
+    filename = str(config['GIT_PARENT_DIR'] + "/" + os.environ.get('GIT_REPO_NAME') + str(cell) + filename.replace('ipynb', 'txt'))
     subprocess.run(['cat', content, '>', filename])
     print(repo.git.add(filename))
     print(repo.git.commit( a=False, m="\nUpdated {}".format(filename) ))
