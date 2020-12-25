@@ -19,7 +19,7 @@ define(['base/js/namespace',
         for(let i = 0; i < cells.length; i++){
             let cell = cells[i];
             cell = $(cell);
-            cell.prepend("<div><button class = \"git-btn\"></button></div>");
+            cell.prepend("<div><button class = \"git-btn btn btn-default\"></button></div>");
         }
         let buttons = $(".git-btn");
         for(let i = 0; i < buttons.length;i++){
