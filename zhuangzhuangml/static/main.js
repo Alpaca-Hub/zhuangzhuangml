@@ -13,12 +13,58 @@ define(['base/js/namespace',
         }
     }
 
-    function get_git_history(uuid){
-        
+    function get_cell_history(uuid){
+        fetch('/cell/get_commit_history',{
+            method: 'POST',
+            body: JSON.stringify({
+                jupyter_uuid: "test",
+                cell_id: uuid
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })    
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .then((data) => {
+            // Work with JSON data here
+            console.log(data);
+            return data;
+        })
+        .catch((err) => {
+            // network error, log in console
+            console.log(err);
+        })
     }
 
     function commit_cell(uuid,data){
-        
+        fetch('/cell/commit',{
+            method: 'POST',
+            body: JSON.stringify({
+                jupyter_uuid: "test",
+                cell_id: uuid,
+                cell_content: string,
+                output: string,
+                git_parent: string
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })    
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .catch((err) => {
+            // network error, log in console
+            console.log(err);
+        })
     }
 
     //uuid v4 generator function
