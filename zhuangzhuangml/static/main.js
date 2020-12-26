@@ -3,6 +3,16 @@ define(['base/js/namespace',
         'jquery'],
         function(IPython, dialog, $){
 
+    // we will define an action here that should happen when we ask to clear and restart the kernel.
+    var commit  = {
+        help: 'Commit current notebook cells',
+        icon : 'fa-code-fork',
+        help_index : '',
+        handler : function (env) {
+            console.log(env);
+        }
+    }
+
     function get_code_output(i) {
         // i is the cell index
         let json = IPython.notebook.toJSON();
@@ -43,7 +53,7 @@ define(['base/js/namespace',
         init_set_bind();
 
         // register new action
-        var action_name = IPython.keyboard_manager.actions.register(git_commit_push, 'commit-push', 'jupyter-git')
+        var action_name = IPython.keyboard_manager.actions.register(commit, 'commit-push', 'jupyter-git')
 
         // add button for new action
         IPython.toolbar.add_buttons_group([action_name])
