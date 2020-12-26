@@ -35,6 +35,53 @@ define(['base/js/namespace',
     }
 
     function init_set_bind() {
+        let st = `
+        .TimelineItem:before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 47px;
+            display: block;
+            width: 2px;
+            content: "";
+            background-color: rgb(234, 236, 239);
+        }
+        .TimelineItem-badge {
+            position: relative;
+            z-index: 1;
+
+            width: 32px;
+            margin-right: 8px;
+            margin-left: 35px;
+            align-items: center;
+            /* background-color: #ffffff; */
+            justify-content: center;
+            flex-shrink: 0;
+
+            height: 16px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            border: 0;
+        }
+        .TimelineItem-body {
+            min-width: 0;
+            max-width: 100%;
+            margin-top: -33px;
+            margin-left: 65px;
+            color: #444d56;
+        }
+        .text-normal {
+            font-weight: 400!important;
+        }
+        
+        .f5 {
+            font-size: 14px!important;
+        }
+        `;
+        $("<style></style>").appendTo("head").html(st);
+    }
+
+    function update_set_bind() {
         //select the code cell for addition of the function
 
         $(".new-git").remove();
@@ -68,10 +115,17 @@ define(['base/js/namespace',
                 if (h.length) {
                     h.remove();
                 } else {
+                    let title = "This is title.";
+
                     input.prepend(`<div class="hist">
-                        Example <br />
-                        Example <br />
-                        Example
+                        <div class="TimelineItem TimelineItem--condensed pt-0 pb-2">
+                            <div class="TimelineItem-badge">
+                            <svg class="octicon octicon-git-commit" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.5 7.75a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm1.43.75a4.002 4.002 0 01-7.86 0H.75a.75.75 0 110-1.5h3.32a4.001 4.001 0 017.86 0h3.32a.75.75 0 110 1.5h-3.32z"></path></svg>
+                            </div>
+                            <div class="TimelineItem-body">
+                                <h2 class="f5 text-normal">${title}</h2>
+                            </div>
+                        </div>
                     </div>`);
                 }
 
@@ -86,8 +140,9 @@ define(['base/js/namespace',
         console.info('Loaded Jupyter extension: zhuangzhuangml');
 
         init_set_bind();
+        update_set_bind();
         $("button").click(()=>{
-            init_set_bind();
+            update_set_bind();
         });
         
         // register new action
