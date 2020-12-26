@@ -13,13 +13,25 @@ define(['base/js/namespace',
         }
     }
 
+    function get_git_history(uuid){
+        
+    }
+
+    //uuid v4 generator function
+    function uuidv4() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => 
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
     function get_code_output(i) {
         // i is the cell index
         let json = IPython.notebook.toJSON();
         console.log(json);
         let cell = IPython.notebook.get_cell(i);
         if (cell.id === undefined) {
-            cell.metadata = {...cell.metadata, id: Math.floor(Math.random() * 10000000)};
+            var uuid = uuidv4();
+            cell.metadata = {...cell.metadata, id: uuid};
         }
 
         console.log(json);
@@ -78,6 +90,12 @@ define(['base/js/namespace',
         $("button").click(()=>{
             init_set_bind();
         });
+        
+        // register new action
+        var action_name = IPython.keyboard_manager.actions.register(commit, 'commit-push', 'jupyter-git')
+        // add button for new action
+        IPython.toolbar.add_buttons_group([action_name])
+
 
     }
 
