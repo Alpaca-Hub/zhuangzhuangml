@@ -3,6 +3,16 @@ define(['base/js/namespace',
         'jquery'],
         function(IPython, dialog, $){
 
+    // we will define an action here that should happen when we ask to clear and restart the kernel.
+    var commit  = {
+        help: 'Commit current notebook cells',
+        icon : 'fa-code-fork',
+        help_index : '',
+        handler : function (env) {
+            console.log(env);
+        }
+    }
+
     function get_code_output(i) {
         // i is the cell index
         let json = IPython.notebook.toJSON();
