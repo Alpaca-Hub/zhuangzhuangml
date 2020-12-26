@@ -27,14 +27,6 @@ define(['base/js/namespace',
     function get_code_output(i) {
         // i is the cell index
         let json = IPython.notebook.toJSON();
-        console.log(json);
-        let cell = IPython.notebook.get_cell(i);
-        if (cell.id === undefined) {
-            var uuid = uuidv4();
-            cell.metadata = {...cell.metadata, id: uuid};
-        }
-
-        console.log(json);
         return {
             "cell": json.cells[i],
             "code": json.cells[i].source,
@@ -47,13 +39,20 @@ define(['base/js/namespace',
 
         $(".new-git").remove();
         let cells = $(".cell");
-        for(let i = 0; i < cells.length; i++){
+        for(let i = 0; i < cells.length; i++) {
             let cell = cells[i];
             cell = $(cell);
             cell.prepend("<div class=\"new-git\"><button class = \"git-btn btn btn-default\"></button></div>");
         }
+        for(let i = 0; i < cells.length; i++) {
+            let cell = IPython.notebook.get_cell(i);
+            if (cell.id === undefined) {
+                var uuid = uuidv4();
+                cell.metadata = {...cell.metadata, id: uuid};
+            }
+        }
         let buttons = $(".git-btn");
-        for(let i = 0; i < buttons.length;i++){
+        for(let i = 0; i < buttons.length;i++) {
             let btn = buttons[i];
             btn = $(btn);
             $(btn).html('<i class = "fa-git fa"></i>');
