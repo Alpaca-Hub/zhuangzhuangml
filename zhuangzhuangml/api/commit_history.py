@@ -4,11 +4,12 @@ import os, json, git, urllib, requests
 from git import Repo, GitCommandError
 from subprocess import check_output
 import subprocess
-import state
+from zhuangzhuangml.api import state
 import json 
 
 class GetCommitHistoryHandler(IPythonHandler):
     def put(self):
+        print('handling cell/get_commit_history')
         # prep data
         with open('conf.json', 'r') as json_file:
             config = json.load(json_file)
