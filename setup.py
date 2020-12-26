@@ -12,5 +12,5 @@ setuptools.setup(
         'notebook',
         'gitpython'
     ],
-    package_data={'zhuangzhuangml': ['static/*']},
+    package_data={'zhuangzhuangml': ['static/*','api/*']},
 )

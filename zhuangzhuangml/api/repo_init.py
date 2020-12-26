@@ -4,10 +4,13 @@ import os, json, git, urllib, requests
 from git import Repo, GitCommandError
 from subprocess import check_output
 import subprocess
-import state
+from zhuangzhuangml.api import state
 
 class RepoInitHandler(IPythonHandler):
     def put(self):
+        print('handling /repo/init')
+        with open('conf.json', 'r') as json_file:
+            config = json.load(json_file)
         # prep data
         data = json.loads(self.request.body.decode('utf-8'))
         git_repo_name = jupyter_uuid = data['jupyter_uuid']
