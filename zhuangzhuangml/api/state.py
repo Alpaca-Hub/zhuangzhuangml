@@ -8,6 +8,15 @@ import subprocess
 repo = None
 htable = []
 
+config = {
+  "GIT_USER": "alpaca",
+  "GIT_PARENT_DIR": os.path.expanduser("~/Desktop/jupyter_versioning"),
+  "GIT_BRANCH_NAME": "main",
+#   "GIT_REMOTE_URL" : "alpaca",
+#   "GIT_REMOTE_UPSTREAM": "alpaca",
+#   "GITHUB_ACCESS_TOKEN": "alpaca"
+}
+
 # def delete_cell():
 #     if cell in htable:
 #         del htable[cell]
